@@ -11,7 +11,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/hakafka?createDatabaseIfNotExist=TRUE&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/hakafka1?createDatabaseIfNotExist=TRUE&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123!!
     logging:
@@ -36,7 +36,13 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
+    volumes:
+      - db-data:/var/lib/mysql
 
 networks:
   ha-net:
     driver: bridge
+
+volumes:
+  db-data:
+    driver: local
